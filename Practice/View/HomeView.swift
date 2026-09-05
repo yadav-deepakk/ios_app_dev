@@ -27,35 +27,7 @@ struct HomeView: View {
                 .font(.title3)
                 .fontWeight(.semibold)
             
-            HStack{
-                Button(action: {
-                    
-                }, label:{
-                    Image(systemName: "backward.fill")
-                        .resizable()
-                        .frame(width: 34, height: 30)
-                        .padding()
-                })
-                
-                Button(action: {
-                    self.isPlaying.toggle()
-                }, label:{
-                    Image(systemName: !self.isPlaying ? "play.fill" : "pause.fill")
-                        .resizable()
-                        .frame(width: 34, height: 30)
-                        .padding()
-                })
-                
-                Button(action: {
-                    
-                }, label:{
-                    Image(systemName: "forward.fill")
-                        .resizable()
-                        .frame(width: 34, height: 30)
-                        .padding()
-                })
-                
-            }.padding()
+            MusicControlsView(isPlaying: $isPlaying)
 
         }.padding()
     }
