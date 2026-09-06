@@ -10,8 +10,8 @@ import SwiftUI
 @main
 struct PracticeApp: App {
     
-    @State private var authStore = AuthStore()
-    
+    @State private var authStore: AuthStore = AuthStore()
+        
     var body: some Scene {
         WindowGroup {
             ContentView()
