@@ -9,13 +9,9 @@ import SwiftUI
 
 @main
 struct PracticeApp: App {
-    
-    @State private var authStore: AuthStore = AuthStore()
-        
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(authStore)
         }
     }
 }
