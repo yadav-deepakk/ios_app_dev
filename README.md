@@ -8,6 +8,7 @@
 ### Projects and Challenges (16 - in progress...)
 #### Projects
 - [WeSplit](https://github.com/yadav-deepakk/ios_app_dev/tree/p1-wesplit)
+- [GuessTheFlag](https://github.com/yadav-deepakk/ios_app_dev/tree/p2-flags-guess)
 
 #### Challenges
 - [Unit Convertion](https://github.com/yadav-deepakk/ios_app_dev/tree/ch1-unit-conversions)
