@@ -48,6 +48,7 @@ struct ContentView: View {
                 }
                 Section("Final Amount(Per Person)"){
                     Text("\(finalTotalPerPerson)")
+                        .foregroundStyle(tipPercentage == 0 ? .red : .primary)
                 }
             }
             .navigationTitle("WeSplit")
