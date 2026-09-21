@@ -7,6 +7,15 @@
 
 import SwiftUI
 
+struct FlagImage: View {
+    var name: String
+    @ViewBuilder var body: some View {
+        Image("\(name)")
+            .clipShape(.capsule)
+            .shadow(radius: 4)
+    }
+}
+
 struct ContentView: View {
     @State private var countries: [String] = [ "Estonia", "France", "Germany","Ireland", "Italy", "Monaco", "Nigeria", "Poland", "Spain", "UK", "US", "Ukraine" ].shuffled()
     @State private var score: Int = 0
@@ -47,9 +56,7 @@ struct ContentView: View {
                         Button(action:{
                             showGuessResult(index)
                         }, label: {
-                            Image("\(countries[index])")
-                                .clipShape(.capsule)
-                                .shadow(radius: 4)
+                            FlagImage(name: countries[index])
                         })
                         .alert("\(guessAlertTitle)", isPresented: $showGuessResultAlert, actions: {
                             Button("OK", role: .confirm) { askQuestion() }
