@@ -10,6 +10,7 @@
 - [WeSplit](https://github.com/yadav-deepakk/ios_app_dev/tree/p1-wesplit)
 - [GuessTheFlag](https://github.com/yadav-deepakk/ios_app_dev/tree/p2-flags-guess)
 - [ViewsAndModifiers](https://github.com/yadav-deepakk/ios_app_dev/tree/p3-views-modifiers)
+- [BetterRest](https://github.com/yadav-deepakk/ios_app_dev/tree/p4-better-rest)
 
 #### Challenges
 - [Unit Convertion](https://github.com/yadav-deepakk/ios_app_dev/tree/ch1-unit-conversions)
