@@ -41,13 +41,14 @@ struct ContentView: View {
     @State private var guessAlertMessage: String = ""
     @State private var showResultAlert: Bool = false
     
+    @State private var degree: Array<Double> = [0.0, 0.0, 0.0]
+    @State private var scale: Array<Double> = [1.0, 1.0, 1.0]
+    @State private var opacity: Array<Double> = [1.0, 1.0, 1.0]
+    
+    
     var body: some View {
         ZStack {
-            RadialGradient(stops: [
-                .init(color: Color(red: 0.55, green: 0.1, blue: 0.1), location: 0.3),
-                .init(color: Color(red: 0.1, green: 0.1, blue: 0.38), location: 0.3)
-            ], center: .top, startRadius: 200, endRadius: 700)
-            .ignoresSafeArea()
+            background
             
             VStack {
 
@@ -55,7 +56,7 @@ struct ContentView: View {
                     .setTitleStyle()
                 
                 VStack(spacing: 14) {
-                    
+
                     VStack {
                         Text("Tap on the flag of")
                             .foregroundStyle(.secondary)
@@ -66,18 +67,7 @@ struct ContentView: View {
                             .font(.title.bold())
                     }
                     
-                    ForEach(0..<3) { index in
-                        Button(action:{
-                            showGuessResult(index)
-                        }, label: {
-                            FlagImage(name: countries[index])
-                        })
-                        .alert("\(guessAlertTitle)", isPresented: $showGuessResultAlert, actions: {
-                            Button("OK", role: .confirm) { askQuestion() }
-                        }, message: {
-                            Text("\(guessAlertMessage)")
-                        })
-                    }
+                    showFlags
                     
                 }
                 .padding(.vertical, 18)
@@ -104,24 +94,57 @@ struct ContentView: View {
         }
     }
     
+    var background: some View {
+        RadialGradient(stops: [
+            .init(color: Color(red: 0.55, green: 0.1, blue: 0.1), location: 0.3),
+            .init(color: Color(red: 0.1, green: 0.1, blue: 0.38), location: 0.3)
+        ], center: .top, startRadius: 200, endRadius: 700)
+        .ignoresSafeArea()
+    }
+    
+    var showFlags: some View {
+        ForEach(0..<3) { index in
+            Button(action: { showGuessResult(index) }, label: {
+                FlagImage(name: countries[index])
+                    .rotation3DEffect(.degrees(degree[index]), axis: (x: 0, y: 1, z: 0))
+                    .opacity(opacity[index])
+                    .scaleEffect(scale[index])
+            })
+            .alert("\(guessAlertTitle)", isPresented: $showGuessResultAlert, actions: {
+                Button("OK", role: .confirm) { askQuestion() }
+            }, message: { Text("\(guessAlertMessage)") })
+        }
+    }
+    
     func askQuestion() {
+        for i in 0...2 {
+            degree[i] = 0.0
+            opacity[i] = 1.0
+            scale[i] = 1.0
+        }
         countries.shuffle()
         correctAnswerIndex = Int.random(in: 0...2)
     }
     
     func showGuessResult(_ index: Int) {
-        totalQuestionCount += 1
         if correctAnswerIndex == index {
             guessAlertTitle = "That's Correct!"
             score += 1
+            // animation purpose
+            degree[index] += 360
         } else {
             guessAlertTitle = "Oops! Incorrect. Try Again."
         }
+        for i in 0..<3 where i != index {
+            opacity[i] = 0.3
+            scale[i] = 0.7
+        }
         guessAlertMessage = "You tapped on flag of \(countries[index])"
         showGuessResultAlert = true
-        if totalQuestionCount == 8 {
+        if totalQuestionCount == 7 {
             showResultAlert = true
         }
+        totalQuestionCount += 1
     }
 }
 
