@@ -7,33 +7,27 @@
 import SwiftUI
 
 struct ContentView : View {
-    @State private var dragAmount: CGSize = .zero
-    @State private var enabled = false
-    var letters = Array("Hacking with swiftui")
+    @State private var show = false
     
     var body: some View {
         VStack {
-            HStack(spacing: 0) {
-                ForEach(0..<letters.count, id:\.self) { i in
-                    Text(String(letters[i]))
-                        .padding(3)
-                        .font(.title3.bold())
-                        .foregroundStyle(.white)
-                        .background(enabled ? .red : .blue)
-                        .offset(dragAmount)
-                        .animation(.linear.delay(Double(i)/25), value: dragAmount)
+            Button("Tap Me") {
+                withAnimation(.spring(duration: 1).delay(0.2)) {
+                    show.toggle()
                 }
             }
-            .gesture (
-                DragGesture()
-                    .onChanged { dragAmount = $0.translation }
-                    .onEnded { _ in
-                        withAnimation {
-                            dragAmount = .zero
-                            enabled.toggle()
-                        }
-                    }
-            )
+            if show {
+                Rectangle()
+                    .frame(width: 200, height: 200)
+                    .foregroundStyle(.red)
+                    .cornerRadius(12)
+                    .transition(
+                        .asymmetric(
+                            insertion: .opacity,
+                            removal: .push(from: .top)
+                        )
+                    )
+            }
         }
     }
 }
