@@ -6,29 +6,46 @@
 //
 import SwiftUI
 
+struct CornerRotateModifier : ViewModifier {
+    var amount: Double
+    var anchor: UnitPoint
+    func body(content: Content) -> some View {
+        content
+            .rotationEffect(.degrees(amount), anchor: anchor)
+            .clipped()
+    }
+}
+
+extension AnyTransition {
+    static var pivot: AnyTransition {
+        .modifier(
+            active: CornerRotateModifier(amount: -90, anchor: .topLeading),
+            identity: CornerRotateModifier(amount: 0, anchor: .topLeading)
+        )
+    }
+}
+
 struct ContentView : View {
-    @State private var show = false
-    
+    @State private var isShowingRed = false
+
     var body: some View {
-        VStack {
-            Button("Tap Me") {
-                withAnimation(.spring(duration: 1).delay(0.2)) {
-                    show.toggle()
-                }
-            }
-            if show {
+        ZStack {
+            Rectangle()
+                .fill(.blue)
+                .frame(width: 200, height: 200)
+            if isShowingRed {
                 Rectangle()
+                    .fill(.red)
                     .frame(width: 200, height: 200)
-                    .foregroundStyle(.red)
-                    .cornerRadius(12)
-                    .transition(
-                        .asymmetric(
-                            insertion: .opacity,
-                            removal: .push(from: .top)
-                        )
-                    )
+                    .transition(.pivot)
             }
         }
+        .onTapGesture {
+            withAnimation {
+                isShowingRed.toggle()
+            }
+        }
+        
     }
 }
 
